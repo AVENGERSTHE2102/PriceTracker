@@ -1,90 +1,100 @@
 # PricePulse 📈
 
-PricePulse is a robust Java-based product price tracker and analytics dashboard. It automatically monitors prices across multiple e-commerce platforms (like Amazon and Flipkart), stores historical data, and triggers alerts when targeted prices are met or significant price drops occur.
+PricePulse is a premium full-stack price tracking solution. It combines a robust **Java Spring Boot** backend with a modern **React + Vite** frontend to provide real-time monitoring, visualization, and alerts for products on Amazon and Flipkart.
 
 ## 🚀 Features
 
--   **Multi-Site Support**: Built-in scrapers for Amazon and Flipkart using Jsoup.
--   **Automated Tracking**: Scheduled hourly and daily scraping jobs.
--   **Price History**: Detailed logging of every price fluctuation.
--   **Smart Alerts**: Instant email notifications for:
-    -   Target price reached.
-    -   Significant price drops (>5%).
--   **Analytics**: Computes min, max, and average prices for every product.
--   **RESTful API**: Comprehensive endpoints for product and alert management.
--   **Global Error Handling**: Standardized API error responses.
+### Frontend (Dashboard)
+-   **Premium UI**: Glassmorphism design with dark mode, backdrop blurs, and smooth animations.
+-   **Predictive Pulse Charts**: Interactive Area Charts (Recharts) visualizing price trends over time.
+-   **Real-time Inventory**: Searchable grid view of all tracked products with status indicators.
+-   **Smart Wizard**: Step-by-step "Add Product" modal with validation.
+-   **Responsive**: Fully optimized for desktop and tablet experiences.
+
+### Backend (Engine)
+-   **Multi-Site Support**: Scraping engine for **Amazon** and **Flipkart** (Jsoup).
+-   **Automated Tracking**: Configurable scheduled jobs (Hourly/Daily) (`@Scheduled`).
+-   **Smart Alerts**: Email notifications for price drops and target matches.
+-   **Analytics**: Computes Min/Max/Avg prices and historical trends.
+-   **REST API**: robust endpoints for management and data analysis.
 
 ## 🛠️ Tech Stack
 
--   **Backend**: Spring Boot 3.5.9
--   **Language**: Java 17
--   **Data Access**: Spring Data JPA (Hibernate)
--   **Database**: MySQL (Production/Dev), H2 (Testing)
--   **Scraping**: Jsoup
--   **Mailing**: Spring Boot Starter Mail
--   **Scheduling**: Spring Task Scheduling
--   **Build Tool**: Maven
+### Frontend
+-   **Framework**: React 18, Vite
+-   **Styling**: Vanilla CSS (Variables, Glassmorphism, Animations)
+-   **Visualization**: Recharts
+-   **Icons**: Lucide React
+-   **HTTP Client**: Axios
+
+### Backend
+-   **Core**: Spring Boot 3.5.9, Java 17
+-   **Database**: MySQL 8.0 (JPA/Hibernate)
+-   **Tools**: Lombok, Maven, Jsoup
 
 ## 📋 Prerequisites
 
--   Java 17 or higher
+-   Java 17+
+-   Node.js 18+ (for frontend)
 -   MySQL Server
--   Maven (or use included `./mvnw`)
 
 ## ⚙️ Configuration
 
-1.  Create a MySQL database named `Pricetracker`.
-2.  Update `src/main/resources/application.properties` with your database credentials:
+1.  **Database Setup**:
+    Create a MySQL database named `Pricetracker`.
+    ```sql
+    CREATE DATABASE Pricetracker;
+    ```
+
+2.  **Backend Config**:
+    Update `src/main/resources/application.properties`:
     ```properties
     spring.datasource.username=root
     spring.datasource.password=your_password
-    ```
-3.  (Optional) Enable email notifications:
-    ```properties
+    # Optional: Email Settings
     app.email.enabled=true
     spring.mail.host=smtp.example.com
-    # ... other mail settings
     ```
 
-## 🏃 Running the Application
+## 🏃 Getting Started
 
-Clone the repository and run:
+### 1. Start the Backend
 ```bash
 cd PriceTracker
 ./mvnw spring-boot:run
 ```
-The server will start at `http://localhost:8080`.
+*Server runs on `http://localhost:8080`*
 
-## 🔌 API Endpoints
+### 2. Start the Frontend
+Open a new terminal:
+```bash
+cd PriceTracker/frontend
+npm install
+npm run dev
+```
+*Dashboard accessible at `http://localhost:3000`*
 
-### Product Management
-- `POST /api/products`: Add a product to track.
-- `GET /api/products`: List all tracked products.
-- `GET /api/products/{id}`: Detailed product info and analytics.
-- `DELETE /api/products/{id}`: Remove a product.
-- `POST /api/products/{id}/scrape`: Manually trigger a price update.
+## 🔌 API Overview
+The backend exposes a full REST API at `http://localhost:8080/api`:
 
-### Analysis & Alerts
-- `GET /api/products/{id}/prices`: Get historical price records.
-- `GET /api/products/{id}/analytics`: Get min/max/avg price analysis.
-- `GET /api/alerts/pending`: See triggered alerts that haven't been notified.
+-   `GET /products` - List inventory
+-   `POST /products` - Track new URL
+-   `GET /products/{id}/analytics` - Price analysis
+-   `POST /products/{id}/scrape` - Force refresh
 
 ## 📂 Project Structure
 
--   `com.PriceTracker.demo.models`: JPA Entities (Product, PriceHistory, Alert)
--   `com.PriceTracker.demo.repositories`: Data Access Layer
--   `com.PriceTracker.demo.service`: Business Logic Layer
--   `com.PriceTracker.demo.scraper`: Web Scraping Strategy Implementations
--   `com.PriceTracker.demo.controller`: REST Controllers
--   `com.PriceTracker.demo.scheduler`: Automated background tasks
-
-## 🧪 Testing
-
-Run the test suite:
-```bash
-./mvnw test
 ```
-*Note: Tests use an in-memory H2 database and do not require MySQL.*
+PriceTracker/
+├── src/main/java/com/PriceTracker/demo/  # Java Backend Source
+│   ├── controller/   # REST Endpoints
+│   ├── service/      # Business Logic
+│   ├── scraper/      # Scraping Engine
+│   └── models/       # Database Entities
+└── frontend/         # React Frontend Source
+    ├── src/components/ # UI Components (Card, Modal, Chart)
+    └── src/services/   # API Integration
+```
 
 ---
-Built with ❤️ by PricePulse Team.
+Built with ❤️ by the PricePulse Team.
